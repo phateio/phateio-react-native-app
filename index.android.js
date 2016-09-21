@@ -15,7 +15,6 @@ import {
   DrawerLayoutAndroid,
 } from 'react-native';
 import OpenURLButton from './components/open-url-button';
-import { Player } from 'react-native-audio-streaming';
 import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
 
 class phateio extends Component {
@@ -77,7 +76,6 @@ class phateio extends Component {
           <Text style={styles.instructions}>
             Experimental version{'\n'}
           </Text>
-          <Player url={'https://phate.io/listen'} />
         </View>
       </DrawerLayoutAndroid>
     );
@@ -107,7 +105,7 @@ const styles = StyleSheet.create({
   background: {
     position: 'absolute',
     top: 0,
-    bottom: 80,
+    bottom: 0,
     left: 0,
     right: 0,
   },
