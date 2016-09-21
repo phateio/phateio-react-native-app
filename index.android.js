@@ -11,8 +11,12 @@ import {
   Text,
   View,
   Image,
+  TouchableHighlight,
+  DrawerLayoutAndroid,
 } from 'react-native';
+import OpenURLButton from './components/open-url-button';
 import { Player } from 'react-native-audio-streaming';
+import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
 
 class phateio extends Component {
   constructor(props) {
@@ -26,18 +30,56 @@ class phateio extends Component {
   render() {
     var moment = require('moment');
     let now_time = moment().format('LTS');
-    return (
-      <View style={styles.container}>
-        <Image source={{uri: 'https://i.imgur.com/8BOmHBN.jpg'}} style={styles.background} />
-        <Text style={styles.welcome}>
-          Welcome to Phate Radio{'\n'}
-          {now_time}
-        </Text>
-        <Text style={styles.instructions}>
-          Experimental version{'\n'}
-        </Text>
-        <Player url={'https://phate.io/listen'} />
+
+  function play_or_stop() {
+    if (this.state.playing) {
+      ReactNativeAudioStreaming.stop();
+      this.setState({playing: false});
+    } else {
+      ReactNativeAudioStreaming.play('https://phate.io/listen');
+      this.setState({playing: true});
+    }
+  }
+
+    var navigationView = (
+      <View style={styles.sliderMenu}>
+        <TouchableHighlight>
+          <View style={styles.sliderMenuItem}>
+            <Text style={styles.sliderMenuItemText}> * Home</Text>
+          </View>
+        </TouchableHighlight>
+        <OpenURLButton url='https://phate.io'>
+          <View style={styles.sliderMenuItem}>
+            <Text style={styles.sliderMenuItemText}> * Open https://phate.io</Text>
+          </View>
+        </OpenURLButton>
+        <TouchableHighlight>
+          <View style={styles.sliderMenuItem}>
+            <Text style={styles.sliderMenuItemText}> * About</Text>
+          </View>
+        </TouchableHighlight>
       </View>
+    );
+
+    return (
+      <DrawerLayoutAndroid
+        drawerBackgroundColor={'rgba(0,0,0,0.7)'}
+        drawerPosition={DrawerLayoutAndroid.positions.Left}
+        drawerWidth={300}
+        renderNavigationView={() => navigationView}
+      >
+        <View style={styles.container}>
+          <Image source={{uri: 'https://i.imgur.com/8BOmHBN.jpg'}} style={styles.background} />
+          <Text style={styles.welcome} onPress={play_or_stop.bind(this)}>
+            Welcome to Phate Radio{'\n'}
+            {now_time}
+          </Text>
+          <Text style={styles.instructions}>
+            Experimental version{'\n'}
+          </Text>
+          <Player url={'https://phate.io/listen'} />
+        </View>
+      </DrawerLayoutAndroid>
     );
   }
 }
@@ -68,6 +110,17 @@ const styles = StyleSheet.create({
     bottom: 80,
     left: 0,
     right: 0,
+  },
+  sliderMenu: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  sliderMenuItem: {
+    padding: 10,
+  },
+  sliderMenuItemText: {
+    color: 'white',
+    fontSize: 18,
   },
 });
 
