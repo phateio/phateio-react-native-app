@@ -15,7 +15,8 @@ import {
   DrawerLayoutAndroid,
 } from 'react-native';
 import OpenURLButton from './components/open-url-button';
-import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
+import PlayerPlatButton from './components/player-play-button';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class phateio extends Component {
   constructor(props) {
@@ -30,31 +31,21 @@ class phateio extends Component {
     var moment = require('moment');
     let now_time = moment().format('LTS');
 
-  function play_or_stop() {
-    if (this.state.playing) {
-      ReactNativeAudioStreaming.stop();
-      this.setState({playing: false});
-    } else {
-      ReactNativeAudioStreaming.play('https://phate.io/listen');
-      this.setState({playing: true});
-    }
-  }
-
     var navigationView = (
       <View style={styles.sliderMenu}>
         <TouchableHighlight>
           <View style={styles.sliderMenuItem}>
-            <Text style={styles.sliderMenuItemText}> * Home</Text>
+            <Text style={styles.sliderMenuItemText}><Icon name="home" size={18} color="white" /> Home</Text>
           </View>
         </TouchableHighlight>
         <OpenURLButton url='https://phate.io'>
           <View style={styles.sliderMenuItem}>
-            <Text style={styles.sliderMenuItemText}> * Open https://phate.io</Text>
+            <Text style={styles.sliderMenuItemText}><Icon name="external-link-square" size={18} color="white" /> Open https://phate.io</Text>
           </View>
         </OpenURLButton>
         <TouchableHighlight>
           <View style={styles.sliderMenuItem}>
-            <Text style={styles.sliderMenuItemText}> * About</Text>
+            <Text style={styles.sliderMenuItemText}><Icon name="info-circle" size={18} color="white" /> About</Text>
           </View>
         </TouchableHighlight>
       </View>
@@ -69,10 +60,13 @@ class phateio extends Component {
       >
         <View style={styles.container}>
           <Image source={{uri: 'https://i.imgur.com/8BOmHBN.jpg'}} style={styles.background} />
-          <Text style={styles.welcome} onPress={play_or_stop.bind(this)}>
+          <Text style={styles.welcome}>
             Welcome to Phate Radio{'\n'}
             {now_time}
           </Text>
+          <View style={{alignItems: 'center'}}>
+            <PlayerPlatButton />
+          </View>
           <Text style={styles.instructions}>
             Experimental version{'\n'}
           </Text>
