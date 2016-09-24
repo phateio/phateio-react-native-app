@@ -22,6 +22,7 @@ class PlayerPlatButton extends Component {
       switch (status) {
       case 'PLAYING':
         ReactNativeAudioStreaming.pause();
+        ReactNativeAudioStreaming.destroyNotification();
         break;
       case 'PAUSED':
         ReactNativeAudioStreaming.resume();
@@ -32,6 +33,7 @@ class PlayerPlatButton extends Component {
         break;
       case 'BUFFERING':
         ReactNativeAudioStreaming.stop();
+        ReactNativeAudioStreaming.destroyNotification();
         break;
       }
     });
