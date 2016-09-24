@@ -82,15 +82,25 @@ class phateio extends Component {
     }
   }
 
-  getNowPlaying() {
+  getNowPlayingTitle() {
     if (this.state.playlist.getRowCount() === 0)
-      return 'Loading . . .';
+      return (<Text>Loading . . .</Text>);
     var rowData = this.state.playlist.getRowData(0, 0);
     var artist = rowData.artist;
     var title = rowData.title;
     return (
+      <Text>        
+        {artist} - {title}
+      </Text>
+    );
+  }
+
+  getNowPlayingTimeLeft() {
+    if (this.state.playlist.getRowCount() === 0)
+      return;
+    var rowData = this.state.playlist.getRowData(0, 0);
+    return (
       <Text>
-        {artist} - {title}{'\n'}
         {this.timeleftOrDuration(rowData)} / {this.secondsToTime(rowData.duration)}
       </Text>
     );
@@ -134,17 +144,23 @@ class phateio extends Component {
             style={styles.playerPlayButton}>
             <PlayerPlatButton />
           </View>
-          <View
-            style={styles.playerNowPlayingContainer}>
-            <Text
-              numberOfLines={2}
-              style={styles.playerNowPlayingText}
-              onPress={() => {
-                this.setModalVisible(true);
-              }}>
-              {this.getNowPlaying()}
-            </Text>
-          </View>
+          <TouchableHighlight
+            style={styles.playerNowPlayingContainer}
+            onPress={() => {
+              this.setModalVisible(true);
+            }}>
+            <View>
+              <Text
+                numberOfLines={2}
+                style={styles.playerNowPlayingText}>
+                {this.getNowPlayingTitle()}
+              </Text>
+              <Text
+                style={styles.playerNowPlayingText}>
+                {this.getNowPlayingTimeLeft()}
+              </Text>
+            </View>
+          </TouchableHighlight>
           <Modal
             animationType={'slide'}
             transparent={true}
@@ -207,7 +223,7 @@ const styles = StyleSheet.create({
   },
   playerNowPlayingContainer: {
     position: 'absolute',
-    bottom: 85,
+    bottom: 80,
     left: 0,
     right: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.2)',
