@@ -11,5 +11,9 @@
     "react-native": "0.30.0",
     "react-native-audio-streaming": "git+https://git@github.com/tlenclos/react-native-audio-streaming.git#master",
     "react-native-vector-icons": "^2.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.6.0",
+    "eslint-plugin-react": "^6.3.0"
   }
 }
