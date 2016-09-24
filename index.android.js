@@ -15,8 +15,10 @@ import {
   ListView,
   TouchableHighlight,
   DrawerLayoutAndroid,
+  BackAndroid,
 } from 'react-native';
 import OpenURLButton from './components/open-url-button';
+import { ReactNativeAudioStreaming } from 'react-native-audio-streaming';
 import PlayerPlatButton from './components/player-play-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -106,6 +108,12 @@ class phateio extends Component {
     );
   }
 
+  exit() {
+    ReactNativeAudioStreaming.stop();
+    ReactNativeAudioStreaming.destroyNotification();
+    BackAndroid.exitApp();
+  }
+
   render() {
     let nowTime = moment().format('LT');
 
@@ -124,6 +132,12 @@ class phateio extends Component {
         <TouchableHighlight>
           <View style={styles.sliderMenuItem}>
             <Text style={styles.sliderMenuItemText}><Icon name="info-circle" size={18} color="white" /> About</Text>
+          </View>
+        </TouchableHighlight>
+        <TouchableHighlight
+          onPress={this.exit}>
+          <View style={styles.sliderMenuItem}>
+            <Text style={styles.sliderMenuItemText}><Icon name="sign-out" size={18} color="white" /> Exit</Text>
           </View>
         </TouchableHighlight>
       </View>
