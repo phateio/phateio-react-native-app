@@ -100,7 +100,7 @@ class phateio extends Component {
 
   getNowPlayingTimeLeft() {
     if (this.state.playlist.getRowCount() === 0)
-      return;
+      return (<Text> </Text>);
     var rowData = this.state.playlist.getRowData(0, 0);
     return (
       <Text>
@@ -120,25 +120,20 @@ class phateio extends Component {
 
     var navigationView = (
       <View style={styles.sliderMenu}>
-        <TouchableHighlight>
-          <View style={styles.sliderMenuItem}>
-            <Text style={styles.sliderMenuItemText}><Icon name="home" size={18} color="white" /> Home</Text>
-          </View>
-        </TouchableHighlight>
         <OpenURLButton url='https://phate.io'>
           <View style={styles.sliderMenuItem}>
-            <Text style={styles.sliderMenuItemText}><Icon name="external-link-square" size={18} color="white" /> Open https://phate.io</Text>
+            <Text style={styles.sliderMenuItemText}>
+              <Icon name="external-link-square" size={18} color="white" />{' '}
+              Open https://phate.io
+            </Text>
           </View>
         </OpenURLButton>
-        <TouchableHighlight>
+        <TouchableHighlight onPress={this.exit}>
           <View style={styles.sliderMenuItem}>
-            <Text style={styles.sliderMenuItemText}><Icon name="info-circle" size={18} color="white" /> About</Text>
-          </View>
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={this.exit}>
-          <View style={styles.sliderMenuItem}>
-            <Text style={styles.sliderMenuItemText}><Icon name="sign-out" size={18} color="white" /> Exit</Text>
+            <Text style={styles.sliderMenuItemText}>
+              <Icon name="sign-out" size={18} color="white" />{' '}
+              Exit
+            </Text>
           </View>
         </TouchableHighlight>
       </View>
@@ -151,12 +146,13 @@ class phateio extends Component {
         drawerWidth={300}
         renderNavigationView={() => navigationView}>
         <View style={styles.container}>
-          <Image source={{uri: 'https://i.imgur.com/8BOmHBN.jpg'}} style={styles.background} />
+          <Image
+            source={{uri: 'https://i.imgur.com/8BOmHBN.jpg'}}
+            style={styles.background} />
           <Text style={styles.clock}>
             {nowTime}
           </Text>
-          <View
-            style={styles.playerPlayButton}>
+          <View style={styles.playerPlayButton}>
             <PlayerPlatButton />
           </View>
           <TouchableHighlight
@@ -184,7 +180,7 @@ class phateio extends Component {
               this.setModalVisible(!this.state.modalVisible);
             }}>
             <TouchableHighlight
-              style={{flex: 1, padding: 10, backgroundColor: 'rgba(0, 0, 0, 0.8)'}}
+              style={styles.ModalContainer}
               onPress={() => {
                 this.setModalVisible(!this.state.modalVisible);
               }}>
@@ -192,7 +188,7 @@ class phateio extends Component {
                 enableEmptySections={true}
                 dataSource={this.state.playlist}
                 renderRow={(rowData) =>
-                  <Text style={{fontSize: 20}}>
+                  <Text style={styles.playlistItem}>
                     <Icon name="asterisk" size={20} />{' '}
                     {rowData.artist} - {rowData.title}{' '}
                     ( {this.timeleftOrDuration(rowData)} / {this.secondsToTime(rowData.duration)} )
@@ -210,7 +206,7 @@ class phateio extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'stretch',
     backgroundColor: '#202020',
   },
@@ -222,10 +218,6 @@ const styles = StyleSheet.create({
     right: 0,
   },
   clock: {
-    position: 'absolute',
-    top: 80,
-    left: 0,
-    right: 0,
     fontSize: 60,
     textAlign: 'center',
     color: '#EEEEEE',
@@ -234,13 +226,8 @@ const styles = StyleSheet.create({
   },
   playerPlayButton: {
     alignItems: 'center',
-    margin: 20,
   },
   playerNowPlayingContainer: {
-    position: 'absolute',
-    bottom: 80,
-    left: 0,
-    right: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.2)',
     padding: 5,
   },
@@ -262,6 +249,14 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
   },
+  ModalContainer: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+  },
+  playlistItem: {
+    fontSize: 20,
+  }
 });
 
 AppRegistry.registerComponent('phateio', () => phateio);
