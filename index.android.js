@@ -40,6 +40,7 @@ class phateio extends Component {
   }
 
   setModalVisible(visible) {
+    this.updatePlaylist({force: true});
     this.setState({modalVisible: visible});
   }
 
@@ -48,8 +49,8 @@ class phateio extends Component {
            && this.timeleftOrDuration(this.state.playlist.getRowData(0, 0)) === '0:00';
   }
 
-  updatePlaylist() {
-    if (!this.isPlaylistStale())
+  updatePlaylist({force = false} = {}) {
+    if (!this.isPlaylistStale() && !force)
       return;
     fetch('https://phate.io/playlist.json', {
       method: 'GET',
