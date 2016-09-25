@@ -1,4 +1,4 @@
-package com.phateio;
+package io.phate;
 
 import com.facebook.react.ReactActivity;
 

@@ -1,4 +1,4 @@
-package com.phateio;
+package io.phate;
 
 import android.app.Application;
 import android.util.Log;
